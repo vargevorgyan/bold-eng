@@ -1,6 +1,6 @@
 import express from "express"
 import controller from "./authController"
-import { validate } from "../../middlewares/validation.handler"
+import {validate} from "../../middlewares/validation.handler"
 
 export default express
 	.Router()

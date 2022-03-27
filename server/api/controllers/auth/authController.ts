@@ -11,6 +11,7 @@ export class AuthController {
 	async register(req: Request, res: Response, next: any) {
 		try {
 			let newUser: UserModel = {...req.body}
+
 			let passService = new PasswordService()
 
 			newUser.userPassword = await passService.generatePasswordHash(newUser.userPassword)
@@ -65,8 +66,9 @@ export class AuthController {
 			body("emailAddress")
 				.isEmail()
 				.withMessage("Invalid email address")
-				.custom(async emailAddress => {
-					const usr = await new UserService().getByEmail(emailAddress)
+				.custom(async (value, {req}) => {
+					const email = req.body.emailAddress
+					const usr = await new UserService().getByEmail(email)
 					if (usr) {
 						return Promise.reject("Email address already in use")
 					}
