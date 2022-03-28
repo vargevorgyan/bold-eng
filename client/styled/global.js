@@ -22,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
     list-style-type: none;
   }
   input,
-  input:focus,
   button {
     border: none;
     outline: none;

@@ -1,1 +1,1 @@
-export const authInputTypes = ["email", "password"]
+export const authInputTypes = {email: "Email", password: "Password"}

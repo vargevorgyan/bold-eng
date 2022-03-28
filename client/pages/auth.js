@@ -1,6 +1,6 @@
 import Header from "../components/header"
 import styled from "styled-components"
-import AuthForm from "../components/auth"
+import AuthForm from "../components/auth/AuthForm"
 
 const Wrapper = styled.div`
 	height: 100%;
