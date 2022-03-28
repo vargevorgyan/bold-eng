@@ -21,13 +21,16 @@ const Input = styled.input`
 	padding: 16px;
 `
 
-function AuthInput({inputType}) {
-	const type = authInputTypes.password === inputType ? authInputTypes.password : "text"
+function AuthInput({inputType, formValues, setFormValues}) {
+	const type = inputType.toLowerCase()
+	const onChange = e => {
+		setFormValues({...formValues, [type]: e.target.value})
+	}
 
 	return (
 		<InputWrapper>
 			<InputLabel>{inputType}</InputLabel>
-			<Input placeholder={inputType} type={type} />
+			<Input placeholder={inputType} type={type} value={formValues[type]} onChange={onChange} />
 		</InputWrapper>
 	)
 }

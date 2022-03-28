@@ -1,7 +1,11 @@
+import {useState} from "react"
 import styled from "styled-components"
+import {errorsText} from "../../constants/auth/authErrorsText"
 import {authInputTypes} from "../../constants/auth/authInputTypes"
+import {validateEmail} from "../../utils/validateEmail"
 import PrimaryBtn from "../buttons/PrimaryBtn"
-import Link from "../Link"
+import LinkStyled from "../LinkStyled"
+import AuthError from "./AuthError"
 import AuthInput from "./AuthInput"
 
 const Wrapper = styled.div`
@@ -26,15 +30,25 @@ const BtnWrapper = styled.div`
 `
 
 function AuthForm() {
+	const [formValues, setFormValues] = useState({email: "", password: ""})
+	const [error, setError] = useState("")
+
+	const onSubmit = () => {
+		if (!formValues.email) return setError(errorsText.emialIsRequired)
+		if (!formValues.password) return setError(errorsText.password)
+		if (!validateEmail(formValues.email)) return setError(errorsText.notVaildEmail)
+	}
+
 	return (
 		<Wrapper>
 			<Title>Sign in to Bold.org</Title>
-			<AuthInput inputType={authInputTypes.email} />
-			<AuthInput inputType={authInputTypes.password} />
+			<AuthInput formValues={formValues} setFormValues={setFormValues} inputType={authInputTypes.email} />
+			<AuthInput formValues={formValues} setFormValues={setFormValues} inputType={authInputTypes.password} />
+			{error && <AuthError errorText={error} />}
 			<BtnWrapper>
-				<PrimaryBtn>Sign in</PrimaryBtn>
+				<PrimaryBtn onClick={onSubmit}>Sign in</PrimaryBtn>
 			</BtnWrapper>
-			<Link center>Foreget Password ?</Link>
+			<LinkStyled justify="center">Foreget Password ?</LinkStyled>
 		</Wrapper>
 	)
 }

@@ -37,6 +37,10 @@ We use psql as default, but feel free to replace it with your favorite database.
 -   Run migrations: `knex migrate:latest`
 -   If needed, rollback migration: `knex migrate:down`
 
+### Running seeds
+
+-   Run seeds: `knex seed:run`
+
 ## Environment Variables
 
 To run the app is necessary to set up the following variable in a **.env** file:
