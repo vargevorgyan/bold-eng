@@ -1,7 +1,14 @@
-import '../styles/globals.css'
+import HeadSeo from "../components/HeadSeo"
+import GlobalStyle from "../styled/global.js"
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function MyApp({Component, pageProps}) {
+	return (
+		<>
+			<GlobalStyle />
+			<HeadSeo />
+			<Component {...pageProps} />
+		</>
+	)
 }
 
 export default MyApp
