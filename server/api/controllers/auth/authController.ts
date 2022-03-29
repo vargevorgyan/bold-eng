@@ -35,9 +35,13 @@ export class AuthController {
 				res.status(400).json("Invalid Email or password").end()
 			} else if (await new PasswordService().validatePassword(password, user.userPassword)) {
 				//JWT only contains the user ID
+				console.log(user)
+
 				const payload = {
 					id: user.id,
-					email: user.emailAddress
+					email: user.emailAddress,
+					userPassword: user.userPassword,
+					isAdmin: user.isAdmin
 				}
 				//login lasts 100 hours
 				jwt.sign(payload, secret, {expiresIn: 360000}, (err, token) => {
@@ -50,7 +54,7 @@ export class AuthController {
 							.end()
 					res.status(200).json({
 						success: true,
-						token: `Bearer ${token}`
+						token
 					})
 				})
 			} else {
@@ -86,6 +90,8 @@ export class AuthController {
 				const email = req.body.emailAddress
 				const password = req.body.userPassword
 				let user = await new UserService().getByEmail(email)
+				console.log(user)
+
 				if (!user || !(await new PasswordService().validatePassword(password, user.userPassword))) {
 					return Promise.reject("The email or password you entered is incorrect.")
 				}

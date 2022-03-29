@@ -7,4 +7,5 @@ export default class UserModel implements IModel {
 	createdAt: Date
 	updatedAt: Date
 	userPassword: string
+	isAdmin: boolean
 }

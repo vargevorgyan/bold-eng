@@ -1,14 +1,16 @@
-exports.seed = function (knex, Promise) {
+import bcrypt from "bcryptjs"
+
+exports.seed = function (knex) {
 	// Deletes ALL existing entries
 	return knex("users")
 		.del()
-		.then(function () {
+		.then(async function () {
 			// Inserts seed entries
 			return knex("users").insert([
 				{
 					id: 1,
 					emailAddress: "test1@email.com",
-					userPassword: "test",
+					userPassword: await bcrypt.hash("test12345", 10),
 					isAdmin: true,
 					createdAt: knex.fn.now(),
 					updatedAt: knex.fn.now()
@@ -16,7 +18,7 @@ exports.seed = function (knex, Promise) {
 				{
 					id: 2,
 					emailAddress: "test2@email.com",
-					userPassword: "password1",
+					userPassword: await bcrypt.hash("password1", 10),
 					isAdmin: false,
 					createdAt: knex.fn.now(),
 					updatedAt: knex.fn.now()
@@ -24,7 +26,7 @@ exports.seed = function (knex, Promise) {
 				{
 					id: 3,
 					emailAddress: "test3@email.com",
-					userPassword: "password123",
+					userPassword: await bcrypt.hash("password123", 10),
 					isAdmin: false,
 					createdAt: knex.fn.now(),
 					updatedAt: knex.fn.now()
