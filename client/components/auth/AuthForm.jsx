@@ -39,6 +39,7 @@ function AuthForm() {
 	const [errorMsg, setError] = useState("")
 	const {setAuthState, authState} = useContext(AuthContext)
 	const router = useRouter()
+
 	const onSubmit = async () => {
 		if (!formValues.email) return setError(errorsText.emialIsRequired)
 		if (!formValues.password) return setError(errorsText.password)

@@ -16,7 +16,7 @@ const Main = styled.main`
 export default function Scholarship() {
 	return (
 		<Wrapper>
-			<Header />
+			<Header whiteBg />
 		</Wrapper>
 	)
 }
