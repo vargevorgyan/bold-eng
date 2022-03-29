@@ -14,8 +14,12 @@ const Main = styled.main``
 export default function Scholarships() {
 	useEffect(() => {
 		;(async () => {
-			const res = await api.get("/scholarships/get")
-			console.log({res})
+			try {
+				const res = await api.get("/scholarships/get")
+				console.log({res})
+			} catch (e) {
+				console.log({e})
+			}
 		})()
 	}, [])
 	return (
