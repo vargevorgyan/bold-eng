@@ -1,9 +1,14 @@
 import {Request, Response} from "express"
+import ScholarshipsModel from "../../../../shared/models/ScholarshipsModel"
+import knex from "../../../common/database"
 
-export class ScholarshipsController {
-	async getScholarships(req: Request, res: Response, next) {
+class ScholarshipsController {
+	async getScholarships(req: Request, res: Response, next: any) {
 		try {
-			console.log("will get schsips")
+			const [scholarships] = await knex<ScholarshipsModel>("scholarships").limit(10)
+			console.log({scholarships})
+
+			return scholarships
 		} catch (error) {
 			next(new Error(error))
 		}

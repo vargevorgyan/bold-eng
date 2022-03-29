@@ -1,32 +1,11 @@
-import ScholarshipsModel from "../../../shared/models/ScholarshipsModel"
-import knex from "../../common/database"
-import IService from "./IService"
+import bcrypt from "bcryptjs"
 
-export default class ScholarshipsService implements IService<ScholarshipsModel> {
-	validate(model: ScholarshipsModel): Promise<boolean> {
-		throw new Error("Method not implemented.")
+export default class PasswordService {
+	public async generatePasswordHash(rawPassword: string): Promise<string> {
+		return await bcrypt.hash(rawPassword, 10)
 	}
 
-	update(model: ScholarshipsModel): Promise<ScholarshipsModel> {
-		throw new Error("Method not implemented.")
-	}
-
-	public async delete(model: ScholarshipsModel): Promise<ScholarshipsModel> {
-		throw new Error("Method not implemented.")
-	}
-
-	public async create(model: ScholarshipsModel): Promise<ScholarshipsModel> {
-		try {
-			const [scholarship] = await knex<ScholarshipsModel>("scholarships")
-				.insert<ScholarshipsModel>(model)
-				.returning("*")
-			return scholarship
-		} catch (error) {
-			return Promise.reject(error)
-		}
-	}
-
-	public async getById(id: number): Promise<ScholarshipsModel> {
-		throw new Error("Method not implemented.")
+	public async validatePassword(passwordRaw: string, passwordHash: string): Promise<boolean> {
+		return await bcrypt.compare(passwordRaw, passwordHash)
 	}
 }
