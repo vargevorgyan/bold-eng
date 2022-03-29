@@ -8,6 +8,26 @@ import jwt from "jsonwebtoken"
 const secret = process.env.JWT_SECRET || "def_secret"
 
 export class AuthController {
+	async me(req: Request, res: Response, next) {
+		const token = req.body.token
+		try {
+			jwt.verify(token, secret, (err, verifiedJwt) => {
+				if (err) {
+					res.status(404).send(err.message)
+				} else {
+					const user = {
+						id: verifiedJwt.id,
+						email: verifiedJwt.email,
+						isAdmin: verifiedJwt.isAdmin
+					}
+					res.json(user)
+				}
+			})
+		} catch (error) {
+			next(new Error(error))
+		}
+	}
+
 	async register(req: Request, res: Response, next: any) {
 		try {
 			let newUser: UserModel = {...req.body}
@@ -35,8 +55,6 @@ export class AuthController {
 				res.status(400).json("Invalid Email or password").end()
 			} else if (await new PasswordService().validatePassword(password, user.userPassword)) {
 				//JWT only contains the user ID
-				console.log(user)
-
 				const payload = {
 					id: user.id,
 					email: user.emailAddress,
@@ -54,7 +72,8 @@ export class AuthController {
 							.end()
 					res.status(200).json({
 						success: true,
-						token
+						token,
+						isAdmin: user.isAdmin
 					})
 				})
 			} else {
@@ -88,9 +107,9 @@ export class AuthController {
 			body("userPassword", "Invalid password").isString().bail().isLength({min: 6}),
 			body().custom(async (value, {req}) => {
 				const email = req.body.emailAddress
+
 				const password = req.body.userPassword
 				let user = await new UserService().getByEmail(email)
-				console.log(user)
 
 				if (!user || !(await new PasswordService().validatePassword(password, user.userPassword))) {
 					return Promise.reject("The email or password you entered is incorrect.")

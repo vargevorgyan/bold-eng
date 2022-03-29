@@ -9,6 +9,7 @@ const LinkWrapper = styled.div`
 		css`
 			display: flex;
 			justify-content: ${props.justify};
+			align-items: center;
 		`}
 `
 

@@ -1,6 +1,7 @@
-import {useState} from "react"
+import {useState, useContext} from "react"
 import styled from "styled-components"
 import {errorsText} from "../../constants/auth/authErrorsText"
+import {jwtKey} from "../../constants/auth/tokenCookieKey"
 import {authInputTypes} from "../../constants/auth/authInputTypes"
 import {validateEmail} from "../../utils/validateEmail"
 import PrimaryBtn from "../buttons/PrimaryBtn"
@@ -9,6 +10,8 @@ import AuthError from "./AuthError"
 import AuthInput from "./AuthInput"
 import api from "../../api"
 import {setCookies} from "cookies-next"
+import {AuthContext} from "../../context"
+import {useRouter} from "next/router"
 
 const Wrapper = styled.div`
 	max-width: 90%;
@@ -34,17 +37,26 @@ const BtnWrapper = styled.div`
 function AuthForm() {
 	const [formValues, setFormValues] = useState({email: "", password: ""})
 	const [errorMsg, setError] = useState("")
-
+	const {setAuthState, authState} = useContext(AuthContext)
+	const router = useRouter()
 	const onSubmit = async () => {
 		if (!formValues.email) return setError(errorsText.emialIsRequired)
 		if (!formValues.password) return setError(errorsText.password)
 		if (!validateEmail(formValues.email)) return setError(errorsText.notVaildEmail)
+		if (authState.data) return setError("You're already loged in")
 		try {
 			const res = await api.post("/auth/login", {
 				emailAddress: formValues.email,
 				userPassword: formValues.password
 			})
-			setCookies("jwt", res.data.token)
+
+			setCookies(jwtKey, res.data.token)
+			setAuthState(prev => ({...prev, data: {email: formValues.email, isAdmin: res.data.isAdmin}}))
+			if (res.data.isAdmin) {
+				//for admins
+				router.push("/scholarship")
+			}
+			router.push("/scholarship")
 		} catch (e) {
 			const error = e?.response?.data?.error[0]?.msg
 			if (error) setError(error)

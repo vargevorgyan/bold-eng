@@ -24,7 +24,3 @@ export default function Auth() {
 		</Wrapper>
 	)
 }
-
-// export const getServerSideProps = ({req, res}) => {
-// 	// send to auth/me
-// }

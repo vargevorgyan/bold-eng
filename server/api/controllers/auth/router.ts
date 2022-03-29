@@ -4,5 +4,6 @@ import {validate} from "../../middlewares/validation.handler"
 
 export default express
 	.Router()
+	.post("/me", controller.me)
 	.post("/register", validate(controller.validateRegister()), controller.register)
 	.post("/login", validate(controller.validateLogin()), controller.login)
