@@ -55,9 +55,9 @@ function AuthForm() {
 			setAuthState(prev => ({...prev, data: {email: formValues.email, isAdmin: res.data.isAdmin}}))
 			if (res.data.isAdmin) {
 				//for admins
-				router.push("/scholarship")
+				router.push("/scholarships")
 			}
-			router.push("/scholarship")
+			router.push("/scholarships")
 		} catch (e) {
 			const error = e?.response?.data?.error[0]?.msg
 			if (error) setError(error)

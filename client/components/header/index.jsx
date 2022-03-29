@@ -2,13 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import React, {useContext} from "react"
 import styled, {css} from "styled-components"
+import {device} from "../../constants/breakpoints"
 import {AuthContext} from "../../context"
 import Icon from "./icon"
 
 const HeaderStyled = styled.header`
 	height: 90px;
 	display: flex;
-	padding: 0 40px;
+	padding: 0 30px;
 	justify-content: space-between;
 	${props =>
 		props.whiteBg &&
@@ -16,6 +17,9 @@ const HeaderStyled = styled.header`
 			background-color: white;
 			box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.07);
 		`}
+	@media ${device.tablet} {
+		padding: 0 90px;
+	}
 `
 const UserIconAndAuthStatus = styled.div`
 	display: flex;
@@ -33,8 +37,8 @@ const AuthStatus = styled.a`
 
 function Header({whiteBg}) {
 	const {authState} = useContext(AuthContext)
-	console.log(authState)
 	const logInOrOut = authState?.data ? "Log out" : "Log in"
+
 	return (
 		<HeaderStyled whiteBg={whiteBg}>
 			<Icon />
