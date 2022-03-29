@@ -11,7 +11,7 @@ export default class UserService implements IService<UserModel> {
 		throw new Error("Method not implemented.")
 	}
 
-	public async delete(model: UserModel): Promise<UserModel> {
+	public async delete(id: number): Promise<number> {
 		throw new Error("Method not implemented.")
 	}
 
