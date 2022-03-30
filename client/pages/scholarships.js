@@ -9,6 +9,9 @@ const Wrapper = styled.div`
 `
 
 const Main = styled.main`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding-bottom: 30px;
 `
 

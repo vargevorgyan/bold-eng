@@ -1,5 +1,6 @@
 import Image from "next/image"
 import styled from "styled-components"
+import {device} from "../../constants/breakpoints"
 import {GrayTextStyled} from "../texts/GrayText"
 
 const Wrapper = styled.div``
@@ -7,6 +8,10 @@ const Title = styled.h1`
 	font-weight: 600;
 	font-size: 20px;
 	color: #100826;
+	margin-top: 10px;
+	@media ${device.laptopS} {
+		margin-top: 0;
+	}
 `
 const FunderWrapper = styled.div`
 	display: flex;

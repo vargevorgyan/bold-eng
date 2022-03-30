@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import {device} from "../../constants/breakpoints"
 import ScholarshipContent from "./ScholarshipContent"
 import ScholarshipInfo from "./ScholarshipInfo"
 
@@ -11,12 +12,18 @@ const ScholarshipItemStyled = styled.article`
 	min-height: 205px;
 	padding: 25px;
 	display: grid;
-	grid-template-columns: 160px 1fr 215px;
+	justify-items: center;
+	grid-template-columns: 1fr;
+	grid-template-rows: 175px 1fr 100px;
 	column-gap: 25px;
+	@media ${device.laptopS} {
+		grid-template-columns: 160px 1fr 215px;
+		grid-template-rows: 1fr;
+	}
 `
 // in future normal image
 const Img = styled.div`
-	width: 160px;
+	width: 100%;
 	height: 100%;
 	background: #c4c4c4;
 `
