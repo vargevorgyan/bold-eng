@@ -52,7 +52,7 @@ To run the app is necessary to set up the following variable in a **.env** file:
 |  DB_HOST   |           Database host (typically "localhost")           |
 |  DB_PORT   |              Database port (typically 5432)               |
 |  DB_USER   |                       Database user                       |
-|    PORT    |     Port where the server will start (typically 3000)     |
+|    PORT    |     Port where the server will start (typically 3001)     |
 | JWT_SECRET | Random string used when generating and validating the JWT |
 
 ## Run It

@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     height: 100%;
     width: 100%;
-    color: white;
     background: #F9FAFB;
     word-break: break-word;
   }

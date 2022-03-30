@@ -5,6 +5,7 @@ class ScholarshipsController {
 	async getScholarships(req: Request, res: Response, next: any) {
 		try {
 			const scholarships = await new ScholarshipsService().get()
+
 			res.json(scholarships)
 		} catch (error) {
 			next(new Error(error))
@@ -19,6 +20,7 @@ class ScholarshipsController {
 			next(new Error(error))
 		}
 	}
+
 	async deleteScholarships(req: Request, res: Response, next: any) {
 		try {
 			const id = req.body.id

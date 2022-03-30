@@ -39,25 +39,21 @@ function AuthForm() {
 	const [errorMsg, setError] = useState("")
 	const {setAuthState, authState} = useContext(AuthContext)
 	const router = useRouter()
+	const redirectToSchl = isAdmin => (isAdmin ? router.push("/scholarships") : router.push("/scholarships"))
 
 	const onSubmit = async () => {
 		if (!formValues.email) return setError(errorsText.emialIsRequired)
 		if (!formValues.password) return setError(errorsText.password)
 		if (!validateEmail(formValues.email)) return setError(errorsText.notVaildEmail)
-		if (authState.data) return setError("You're already loged in")
+		if (authState?.data) return redirectToSchl(authState?.isAdmin)
 		try {
 			const res = await api.post("/auth/login", {
 				emailAddress: formValues.email,
 				userPassword: formValues.password
 			})
-
 			setCookies(jwtKey, res.data.token)
 			setAuthState(prev => ({...prev, data: {email: formValues.email, isAdmin: res.data.isAdmin}}))
-			if (res.data.isAdmin) {
-				//for admins
-				router.push("/scholarships")
-			}
-			router.push("/scholarships")
+			redirectToSchl(res.data.isAdmin)
 		} catch (e) {
 			const error = e?.response?.data?.error[0]?.msg
 			if (error) setError(error)
