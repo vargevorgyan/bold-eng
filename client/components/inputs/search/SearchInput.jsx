@@ -1,7 +1,7 @@
 import Image from "next/image"
 import React from "react"
 import styled from "styled-components"
-import {device} from "../../constants/breakpoints"
+import {device} from "../../../constants/breakpoints"
 
 const Wrapper = styled.div`
 	width: 100%;

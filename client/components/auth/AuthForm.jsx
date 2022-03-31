@@ -2,18 +2,18 @@ import {useState, useContext} from "react"
 import styled from "styled-components"
 import {errorsText} from "../../constants/auth/authErrorsText"
 import {jwtKey} from "../../constants/auth/tokenCookieKey"
-import {authInputTypes} from "../../constants/auth/authInputTypes"
+import {AuthInputTypes} from "../../constants/auth/AuthInputTypes"
 import {validateEmail} from "../../utils/validateEmail"
 import PrimaryBtn from "../buttons/PrimaryBtn"
 import LinkStyled from "../LinkStyled"
-import AuthError from "./AuthError"
-import AuthInput from "./AuthInput"
+import SuccessErrorMessage from "../SuccessErrorMessage"
+import SimpleInput from "../inputs/SimpleInput"
 import api from "../../api"
 import {setCookies} from "cookies-next"
 import {AuthContext} from "../../context"
 import {useRouter} from "next/router"
 
-const Wrapper = styled.div`
+const Form = styled.form`
 	max-width: 90%;
 	width: 432px;
 	height: fit-content;
@@ -39,13 +39,16 @@ function AuthForm() {
 	const [errorMsg, setError] = useState("")
 	const {setAuthState, authState} = useContext(AuthContext)
 	const router = useRouter()
-	const redirectToSchl = isAdmin => (isAdmin ? router.push("/scholarships") : router.push("/scholarships"))
+	const redirectToSchl = isAdmin =>
+		isAdmin ? router.push("/admin/createScholarships") : router.push("/scholarships")
 
-	const onSubmit = async () => {
+	const onSubmit = async e => {
+		e.preventDefault()
 		if (!formValues.email) return setError(errorsText.emialIsRequired)
 		if (!formValues.password) return setError(errorsText.password)
 		if (!validateEmail(formValues.email)) return setError(errorsText.notVaildEmail)
 		if (authState?.data) return redirectToSchl(authState?.isAdmin)
+
 		try {
 			const res = await api.post("/auth/login", {
 				emailAddress: formValues.email,
@@ -61,16 +64,16 @@ function AuthForm() {
 	}
 
 	return (
-		<Wrapper>
+		<Form name="authorization">
 			<Title>Sign in to Bold.org</Title>
-			<AuthInput formValues={formValues} setFormValues={setFormValues} inputType={authInputTypes.email} />
-			<AuthInput formValues={formValues} setFormValues={setFormValues} inputType={authInputTypes.password} />
-			{errorMsg && <AuthError errorText={errorMsg} />}
+			<SimpleInput formValues={formValues} setFormValues={setFormValues} inputType={AuthInputTypes.email} />
+			<SimpleInput formValues={formValues} setFormValues={setFormValues} inputType={AuthInputTypes.password} />
+			{errorMsg && <SuccessErrorMessage msg={errorMsg} isError />}
 			<BtnWrapper>
 				<PrimaryBtn onClick={onSubmit}>Sign in</PrimaryBtn>
 			</BtnWrapper>
 			<LinkStyled justify="center">Foreget Password ?</LinkStyled>
-		</Wrapper>
+		</Form>
 	)
 }
 

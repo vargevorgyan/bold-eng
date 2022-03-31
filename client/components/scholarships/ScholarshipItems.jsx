@@ -35,7 +35,7 @@ function ScholarshipsItems() {
 				const {data} = await api.get("/scholarships/get")
 				setSchlItems(data)
 			} catch (e) {
-				console.log({e})
+				console.log(e)
 			}
 		})()
 	}, [])

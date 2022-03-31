@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import {device} from "../../constants/breakpoints"
-import SearchInput from "../inputs/SearchInput"
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -17,21 +16,18 @@ const Wrapper = styled.div`
 	}
 `
 const Title = styled.h1`
-	display: none;
+	display: inline;
 	font-weight: 600;
 	font-size: 32px;
 	color: #100826;
-	@media ${device.tabletS} {
-		display: inline;
-	}
 `
-function SearchScholarships() {
+
+function AdminPanelTitle({children}) {
 	return (
 		<Wrapper>
-			<Title>Scholarships</Title>
-			<SearchInput />
+			<Title>{children}</Title>
 		</Wrapper>
 	)
 }
 
-export default SearchScholarships
+export default AdminPanelTitle

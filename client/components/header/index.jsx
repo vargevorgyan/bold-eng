@@ -1,7 +1,9 @@
+import {removeCookies} from "cookies-next"
 import Image from "next/image"
 import Link from "next/link"
 import React, {useContext} from "react"
 import styled, {css} from "styled-components"
+import {jwtKey} from "../../constants/auth/tokenCookieKey"
 import {device} from "../../constants/breakpoints"
 import {AuthContext} from "../../context"
 import Icon from "./icon"
@@ -36,8 +38,15 @@ const AuthStatus = styled.a`
 `
 
 function Header({whiteBg}) {
-	const {authState} = useContext(AuthContext)
+	const {authState, setAuthState} = useContext(AuthContext)
 	const logInOrOut = authState?.data ? "Log out" : "Log in"
+
+	const logOut = () => {
+		if (authState?.data) {
+			removeCookies(jwtKey)
+			setAuthState({data: null, error: null})
+		}
+	}
 
 	return (
 		<HeaderStyled whiteBg={whiteBg}>
@@ -45,7 +54,7 @@ function Header({whiteBg}) {
 			<UserIconAndAuthStatus>
 				{authState?.data && <Image src="/auth/userIcon.svg" alt="" width={36} height={36} />}
 				<Link href="/auth" passHref>
-					<AuthStatus>{logInOrOut}</AuthStatus>
+					<AuthStatus onClick={logOut}>{logInOrOut}</AuthStatus>
 				</Link>
 			</UserIconAndAuthStatus>
 		</HeaderStyled>

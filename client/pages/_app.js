@@ -17,7 +17,6 @@ function MyApp({Component, pageProps}) {
 				const {data} = await api.post("/auth/me", {
 					token
 				})
-				console.log({data})
 				setAuthState({data})
 			} catch (error) {
 				setAuthState({data: null, error})

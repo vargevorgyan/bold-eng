@@ -1,6 +1,6 @@
 import Header from "../components/header"
 import styled from "styled-components"
-import SearchScholarships from "../components/scholarships/SearchScholarships"
+import SearchScholarships from "../components/scholarships/ScholarshipsSearch"
 import ScholarshipsItems from "../components/scholarships/ScholarshipItems"
 
 const Wrapper = styled.div`

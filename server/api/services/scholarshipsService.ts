@@ -14,7 +14,6 @@ export default class ScholarshipsService implements IService<ScholarshipsModel> 
 	public async delete(id: number): Promise<number> {
 		try {
 			const scholarship = await knex<ScholarshipsModel>("scholarships").where("id", id).del()
-			console.log("del", scholarship)
 
 			return scholarship
 		} catch (error) {
@@ -24,9 +23,8 @@ export default class ScholarshipsService implements IService<ScholarshipsModel> 
 
 	public async create(model: ScholarshipsModel): Promise<ScholarshipsModel> {
 		try {
-			const [scholarship] = await knex<ScholarshipsModel>("scholarships")
-				.insert<ScholarshipsModel>(model)
-				.returning("*")
+			const scholarship = await knex<ScholarshipsModel>("scholarships").insert<ScholarshipsModel>(model)
+
 			return scholarship
 		} catch (error) {
 			return Promise.reject(error)

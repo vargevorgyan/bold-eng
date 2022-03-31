@@ -1,8 +1,11 @@
+import {useContext} from "react"
 import Image from "next/image"
 import styled from "styled-components"
 import {device} from "../../constants/breakpoints"
 import PrimaryBtn from "../buttons/PrimaryBtn"
 import GrayText from "../texts/GrayText"
+import {useRouter} from "next/router"
+import {AuthContext} from "../../context"
 
 const Wrapper = styled.div`
 	width: 100%;
@@ -48,6 +51,11 @@ const IconWrapper = styled.div`
 const Info = styled.p``
 
 function ScholarshipInfo({schlItem}) {
+	const {authState} = useContext(AuthContext)
+	const router = useRouter()
+	const onClick = () => {
+		if (authState.data) return router.push("/auth")
+	}
 	return (
 		<Wrapper>
 			<InfosWrapper>
@@ -70,7 +78,7 @@ function ScholarshipInfo({schlItem}) {
 					</div>
 				</InfoWrapper>
 			</InfosWrapper>
-			<PrimaryBtn>Apply to scholarship</PrimaryBtn>
+			<PrimaryBtn onClick={onClick}>Apply to scholarship</PrimaryBtn>
 		</Wrapper>
 	)
 }

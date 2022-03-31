@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import {authInputTypes} from "../../constants/auth/authInputTypes"
 
 const InputWrapper = styled.div`
 	margin-top: 20px;
@@ -21,7 +20,7 @@ const Input = styled.input`
 	padding: 16px;
 `
 
-function AuthInput({inputType, formValues, setFormValues}) {
+function SimpleInput({inputType, formValues, setFormValues}) {
 	const type = inputType.toLowerCase()
 	const onChange = e => {
 		setFormValues({...formValues, [type]: e.target.value})
@@ -29,10 +28,17 @@ function AuthInput({inputType, formValues, setFormValues}) {
 
 	return (
 		<InputWrapper>
-			<InputLabel>{inputType}</InputLabel>
-			<Input placeholder={inputType} type={type} value={formValues[type]} onChange={onChange} />
+			<InputLabel htmlFor={inputType}>{inputType}</InputLabel>
+			<Input
+				id={inputType}
+				placeholder={inputType}
+				type={type}
+				value={formValues[type] || ""}
+				onChange={onChange}
+				name={type}
+			/>
 		</InputWrapper>
 	)
 }
 
-export default AuthInput
+export default SimpleInput

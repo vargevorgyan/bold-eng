@@ -4,5 +4,5 @@ import controller from "./scholarshipsController"
 export default express
 	.Router()
 	.get("/get", controller.getScholarships)
-	.post("/create", controller.createScholarships)
+	.put("/create", controller.createScholarships)
 	.delete("/delete", controller.deleteScholarships)

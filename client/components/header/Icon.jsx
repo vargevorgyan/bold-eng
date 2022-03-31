@@ -1,8 +1,10 @@
-import React from "react"
 import Image from "next/image"
+import {useRouter} from "next/router"
 
 function Icon() {
-	return <Image src="/bold-eng.svg" alt="" width={133} height={20} />
+	const router = useRouter()
+	const redirect = () => router.push("/scholarships")
+	return <Image src="/bold-eng.svg" alt="" width={133} height={20} onClick={redirect} style={{cursor: "pointer"}} />
 }
 
 export default Icon

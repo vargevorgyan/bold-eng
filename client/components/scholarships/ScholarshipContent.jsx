@@ -3,7 +3,9 @@ import styled from "styled-components"
 import {device} from "../../constants/breakpoints"
 import {GrayTextStyled} from "../texts/GrayText"
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+	width: 100%;
+`
 const Title = styled.h1`
 	font-weight: 600;
 	font-size: 20px;
