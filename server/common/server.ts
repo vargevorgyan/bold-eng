@@ -27,7 +27,12 @@ export default class ExpressServer {
 		app.use(bodyParser.text({limit: process.env.REQUEST_LIMIT || "100kb"}) as RequestHandler)
 		app.use(cookieParser(process.env.SESSION_SECRET))
 		app.use(express.static(`${root}/public`))
-		app.use(cors())
+		const corsOptions = {
+			origin: "http://localhost:3000",
+			credentials: true,
+			optionSuccessStatus: 200
+		}
+		app.use(cors(corsOptions))
 
 		app.use(logger)
 	}

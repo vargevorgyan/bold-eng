@@ -1,10 +1,10 @@
-import {useEffect, useContext} from "react"
 import Header from "../../components/header"
 import styled from "styled-components"
 import AdminPanelTitle from "../../components/adminPanel/AdminPanelTitle"
 import DeleteAdminPanelForm from "../../components/adminPanel/DeleteAdminPanelForm"
-import {AuthContext} from "../../context"
-import {useRouter} from "next/router"
+import {getCookie} from "cookies-next"
+import {jwtKey} from "../../constants/auth/tokenCookieKey"
+import api from "../../api"
 
 const Wrapper = styled.div`
 	height: 100%;
@@ -13,27 +13,38 @@ const Wrapper = styled.div`
 
 const Main = styled.main``
 
-function Admin() {
-	const {authState} = useContext(AuthContext)
-	const router = useRouter()
-
-	useEffect(() => {
-		if (authState?.data?.isAdmin === false) router.push("/")
-	}, [authState?.data?.isAdmin, router])
-
+function DeleteScholarships() {
 	return (
 		<Wrapper>
 			<Header whiteBg />
 			<Main>
-				<AdminPanelTitle>
-					{authState?.data?.isAdmin === null
-						? "Please await"
-						: authState?.data?.isAdmin && "Delete Scholarships"}
-				</AdminPanelTitle>
-				{authState?.data?.isAdmin && <DeleteAdminPanelForm />}
+				<AdminPanelTitle>Delete Scholarships</AdminPanelTitle>
+				<DeleteAdminPanelForm />
 			</Main>
 		</Wrapper>
 	)
 }
 
-export default Admin
+export const getServerSideProps = async ({req, res}) => {
+	try {
+		const token = getCookie(jwtKey, {req, res})
+		const {data} = await api.post("/auth/me", {
+			token
+		})
+		if (data?.isAdmin) {
+			return {
+				props: data
+			}
+		}
+	} catch (e) {
+		console.log(e)
+	}
+	return {
+		redirect: {
+			permanent: true,
+			destination: "/scholarships"
+		}
+	}
+}
+
+export default DeleteScholarships

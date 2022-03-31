@@ -40,7 +40,7 @@ function AuthForm() {
 	const {setAuthState, authState} = useContext(AuthContext)
 	const router = useRouter()
 	const redirectToSchl = isAdmin =>
-		isAdmin ? router.push("/admin/createScholarships") : router.push("/scholarships")
+		isAdmin ? router.replace("/admin/createScholarships") : router.push("/scholarships")
 
 	const onSubmit = async e => {
 		e.preventDefault()

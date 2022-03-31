@@ -10,6 +10,7 @@ const secret = process.env.JWT_SECRET || "def_secret"
 export class AuthController {
 	async me(req: Request, res: Response, next) {
 		const token = req.body.token
+
 		try {
 			jwt.verify(token, secret, (err, verifiedJwt) => {
 				if (err) {

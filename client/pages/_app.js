@@ -13,7 +13,6 @@ function MyApp({Component, pageProps}) {
 			try {
 				const token = getCookie(jwtKey)
 				if (!token) return
-
 				const {data} = await api.post("/auth/me", {
 					token
 				})

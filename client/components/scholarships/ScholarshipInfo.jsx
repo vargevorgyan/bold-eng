@@ -54,7 +54,7 @@ function ScholarshipInfo({schlItem}) {
 	const {authState} = useContext(AuthContext)
 	const router = useRouter()
 	const onClick = () => {
-		if (authState.data) return router.push("/auth")
+		if (!authState.data) return router.push("/auth")
 	}
 	return (
 		<Wrapper>
