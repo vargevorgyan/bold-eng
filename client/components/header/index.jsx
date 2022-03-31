@@ -6,11 +6,13 @@ import styled, {css} from "styled-components"
 import {jwtKey} from "../../constants/auth/tokenCookieKey"
 import {device} from "../../constants/breakpoints"
 import {AuthContext} from "../../context"
+import LinkStyled from "../LinkStyled"
 import Icon from "./icon"
 
 const HeaderStyled = styled.header`
 	height: 90px;
 	display: flex;
+	flex-wrap: wrap;
 	padding: 0 30px;
 	justify-content: space-between;
 	${props =>
@@ -36,7 +38,12 @@ const AuthStatus = styled.a`
 	color: #787878;
 	margin-left: 18px;
 `
-
+const Navigation = styled.nav`
+	width: 100%;
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	column-gap: 20px;
+`
 function Header({whiteBg}) {
 	const {authState, setAuthState} = useContext(AuthContext)
 	const logInOrOut = authState?.data ? "Log out" : "Log in"
@@ -57,6 +64,20 @@ function Header({whiteBg}) {
 					<AuthStatus onClick={logOut}>{logInOrOut}</AuthStatus>
 				</Link>
 			</UserIconAndAuthStatus>
+			{authState?.data?.isAdmin && (
+				<Navigation>
+					<LinkStyled>
+						<Link href="/admin/createScholarships">
+							<a>Create scholarhips</a>
+						</Link>
+					</LinkStyled>
+					<LinkStyled>
+						<Link href="/admin/deleteScholarships">
+							<a>Delete scholarhips</a>
+						</Link>
+					</LinkStyled>
+				</Navigation>
+			)}
 		</HeaderStyled>
 	)
 }

@@ -46,7 +46,9 @@ function DeleteAdminPanelForm() {
 
 			setMessage({isError: false, text: "Deleted succesfuly!"})
 		} catch (e) {
-			if (e.message) setMessage({isError: true, text: e?.message})
+			if (e?.response?.data?.msg) {
+				setMessage({isError: true, text: e?.response?.data?.msg})
+			} else if (e?.message) setMessage({isError: true, text: e?.message})
 		}
 	}
 

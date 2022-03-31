@@ -42,6 +42,9 @@ class ScholarshipsController {
 					res.status(404).send(err.message)
 				} else {
 					const scholarships = await new ScholarshipsService().delete(id)
+					if (!scholarships) {
+						return res.status(404).json({msg: "There is no Scholarship with that Id!"})
+					}
 					res.json(scholarships)
 				}
 			})
